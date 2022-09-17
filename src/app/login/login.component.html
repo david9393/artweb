@@ -1,0 +1,41 @@
+<p-toast></p-toast>
+
+
+<body>
+    <header class="container-fluid bg-primary d-flex justify-content-center">
+        <a href="inicio.html"> <h1 class="text-light mb-3 p-4 fs-1">ArtWork</h1></a>               
+      </header>
+  
+    <div class="container py-5">
+        <div class="card my-5">
+            <div class="card-body">
+                <div class="row m-5">
+                    <div class="col-md-6 ">
+                        <img class="img-thumbnail" src="/assets/ciervo.jpg/">
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="h4 text-gray-900 my-3">Bienvenido</h1>
+                        <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" formControlName="email" placeholder="Usuario" required>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <input type="password" class="form-control" formControlName="password" placeholder="Contraseña" required>
+                            </div>
+                            <br>
+                            <button 
+                            type="submit" 
+                            class="btn btn-primary btn-block" 
+                            id="BTNENTRAR">Entrar</button>
+                            <hr>
+                        </form>
+                    </div>
+                </div>
+                <p>olvidaste tu conraseña?<a href="#">cambiar contraseña</a></p>
+                <a routerLink="/register">¿Aún no tienes cuenta? Registrarme</a>        
+            </div>
+        </div>
+    </div>
+</body>
+
