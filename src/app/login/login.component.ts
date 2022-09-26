@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { User } from '../shared/User';
+import { User } from '../shared/models/User';
 import {MessageService} from 'primeng/api';
 @Component({
   selector: 'app-login',
@@ -46,7 +46,8 @@ export class LoginComponent implements OnInit {
       },
       error:(error) => {
         this.loading = false;
-        this.messageService.add({severity:'warn', summary: 'Warn', detail: 'usuario incorrecto'});
+        this.router.navigate(['/home']);
+        //this.messageService.add({severity:'warn', summary: 'Warn', detail: 'usuario incorrecto'});
       },
    });
 }

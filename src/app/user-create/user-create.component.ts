@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UserService } from '../services/user.service';
-import { User } from '../shared/User';
+import { User } from '../shared/models/User';
 
 @Component({
   selector: 'app-user-create',

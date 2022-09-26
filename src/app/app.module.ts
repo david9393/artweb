@@ -10,8 +10,12 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import {CarouselModule} from 'primeng/carousel';
+import {ButtonModule} from 'primeng/button';
+import {TabMenuModule} from 'primeng/tabmenu';
 import {ToastModule} from 'primeng/toast';
 import { InicioComponent } from './inicio/inicio.component';
+import { VentaComponent } from './venta/venta.component';
 
 
 @NgModule({
@@ -20,7 +24,8 @@ import { InicioComponent } from './inicio/inicio.component';
     LoginComponent,
     UserCreateComponent,
     HomeComponent,
-    InicioComponent
+    InicioComponent,
+    VentaComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,10 @@ import { InicioComponent } from './inicio/inicio.component';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    CarouselModule,
+    ButtonModule,
+    TabMenuModule,
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

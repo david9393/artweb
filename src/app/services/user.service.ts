@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BaseOut } from '../shared/BaseOut';
-import { User } from '../shared/User';
+import { User } from '../shared/models/User';
 import { BaseService } from './base.service';
 
 @Injectable({
