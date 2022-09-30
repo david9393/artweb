@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Observable, of, throwError, Subject } from 'rxjs';
@@ -21,7 +21,12 @@ export class BaseService {
 
   executePost(relativeUrl: string, data?: any): any {
     const url = `${ this._baseUrl+relativeUrl }`;
-    return this.http.post( url,data, this.headers ).pipe()
+    return this.http.post( url,data,{headers: this.headers}).pipe()
+  }
+
+  executeGet(relativeUrl: string,params?:HttpParams): any {
+    const url = `${ this._baseUrl+relativeUrl }`;
+    return this.http.get(url, {headers: this.headers, params: params}).pipe()
   }
 
   get token(): string {
@@ -29,11 +34,10 @@ export class BaseService {
   }
 
   get headers() {
-    return {
-      headers: {
-        'Authorization':  'Bearer ' + this.token
-      }
-    }
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + this.token);
+    return headers;
   }
 
   private getServerErrorMessage(error: HttpErrorResponse): string {

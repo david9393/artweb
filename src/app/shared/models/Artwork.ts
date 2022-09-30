@@ -1,6 +1,10 @@
 export class Artwork {
     id?:number;
-    name?: string; 
-    price?: number; 
-    url?:string;
+    userId?: number;
+    name: string="";
+    price: number=0;
+    photo: string="";
+    author: string="";
+    type: string="";
+    active?: boolean;
 }

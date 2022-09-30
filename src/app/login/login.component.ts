@@ -46,8 +46,7 @@ export class LoginComponent implements OnInit {
       },
       error:(error) => {
         this.loading = false;
-        this.router.navigate(['/home']);
-        //this.messageService.add({severity:'warn', summary: 'Warn', detail: 'usuario incorrecto'});
+        this.messageService.add({severity:'warn', summary: 'Warn', detail: 'usuario incorrecto'});
       },
    });
 }

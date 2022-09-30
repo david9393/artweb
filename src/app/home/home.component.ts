@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { ArtworkService } from '../services/artwork.service';
+import { SalesService } from '../services/sales.service';
 import { Artwork } from '../shared/models/Artwork';
+import { SalesArtwork } from '../shared/models/SalesArtwork';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +15,16 @@ import { Artwork } from '../shared/models/Artwork';
 export class HomeComponent implements OnInit {
 
   artworks: Artwork[]=[]
+  artwork:Artwork=new Artwork();
   responsiveOptions:any;
   items: MenuItem[]=[];
+  displayModal: boolean=false;
 
-  constructor( private router: Router) { }
+  constructor( 
+    private router: Router,
+    private messageService: MessageService,
+    private artworkService: ArtworkService,
+    private salesService: SalesService, ) { }
 
   ngOnInit(): void {
     this.LoadArtworks();
@@ -37,27 +47,60 @@ export class HomeComponent implements OnInit {
   ];
   this.items = [
     {label: 'home', icon: 'pi pi-fw pi-home' ,command: (event) => this.onItemClick(event) },
-    {label: 'venta', icon: 'pi pi-fw pi-pencil',command: (event) => this.onItemClick(event)}
-];
+    {label: 'venta', icon: 'pi pi-fw pi-file',command: (event) => this.onItemClick(event)},
+    {label: 'compra', icon: 'pi pi-shopping-cart',command: (event) => this.onItemClick(event)},
+    {label: 'login', icon: 'pi pi-sign-out',command: (event) => this.onItemClick(event)}
+  ];
 }
 
+artworkForm = new FormGroup({
+  address: new FormControl<string>('', {nonNullable: true,validators:Validators.required}),
+  paymentMethod: new FormControl<string>('', {nonNullable: true,validators:Validators.required}),
+});
+
   LoadArtworks() {
-    let artwork1:Artwork={id:1,name: 'name 1',price:45000,url:'/assets/car1.jpg/'}
-    let artwork2:Artwork={id:1,name: 'name 2',price:26000,url:'/assets/car2.jpg/'}
-    let artwork3:Artwork={id:1,name: 'name 3',price:38000,url:'/assets/car3.jpg/'}
-    let artwork4:Artwork={id:1,name: 'name 4',price:15000,url:'/assets/car4.jpg/'}
-    let artwork5:Artwork={id:1,name: 'name 4',price:15000,url:'/assets/car5.jpg/'}
 
-    this.artworks.push(artwork1);
-    this.artworks.push(artwork2);
-    this.artworks.push(artwork3);
-    this.artworks.push(artwork4);
-    this.artworks.push(artwork5);
-
+    this.artworkService.All().subscribe({
+      next:  (data) => {
+        this.artworks = data;
+      },
+      error:(error) => {
+        this.messageService.add({severity:'warn', summary: 'Warn', detail: 'usuario incorrecto'});
+      },
+   });
   }
 
   onItemClick(event:any){
     this.router.navigate([event.item.label]);
-    console.log(event.item.label);
+  }
+  showModalDialog(item:Artwork) {
+    this.artworkForm.reset()
+    this.artwork=item;
+    this.displayModal = true;
+  }
+  confirmSales() {
+    if(this.artworkForm.invalid){
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'faltan datos requeridos'});
+      return;
+    }
+
+    let salesArtwork :SalesArtwork= {
+      userId:Number(localStorage.getItem("userid")),
+      date: new Date(Date.now()),
+      artworkId:this.artwork.id!,
+      address:this.artworkForm.controls.address.value,
+      payment:this.artworkForm.controls.paymentMethod.value
+    }
+    this.salesService.Add(salesArtwork).subscribe({
+      next:  (data) => {
+        this.displayModal = false;
+        this.LoadArtworks();
+      },
+      error:(error) => {
+        this.displayModal = false;
+        this.messageService.add({severity:'warn', summary: 'Warn', detail: 'ocurrio un error'});
+      },
+   });
+   
   }
 }

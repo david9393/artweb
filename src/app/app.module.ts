@@ -13,9 +13,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import {CarouselModule} from 'primeng/carousel';
 import {ButtonModule} from 'primeng/button';
 import {TabMenuModule} from 'primeng/tabmenu';
+import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
+import {TableModule} from 'primeng/table';
 import { InicioComponent } from './inicio/inicio.component';
 import { VentaComponent } from './venta/venta.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+import { CompraComponent } from './compra/compra.component';
 
 
 @NgModule({
@@ -25,7 +31,8 @@ import { VentaComponent } from './venta/venta.component';
     UserCreateComponent,
     HomeComponent,
     InicioComponent,
-    VentaComponent
+    VentaComponent,
+    CompraComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +44,10 @@ import { VentaComponent } from './venta/venta.component';
     CarouselModule,
     ButtonModule,
     TabMenuModule,
+    DialogModule,
+    TableModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(() => getStorage())
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]

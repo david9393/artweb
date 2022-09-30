@@ -6,13 +6,13 @@
         <div class="product-item">
             <div class="product-item-content">
                 <div class="mb-3">
-                    <img src="{{product.url}}" [alt]="product.name" class="product-image" />
+                    <img src="{{product.photo}}" [alt]="product.name" class="product-image" />
                 </div>
                 <div>
                     <h4 class="mb-1">{{product.name}}</h4>
-                    <h6 class="mt-0 mb-3">${{product.price}}</h6>
+                    <h6 class="mt-0 mb-3">{{product.price | currency:'USD'}}</h6>
                     <div class="car-buttons mt-5">
-                        <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
+                        <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search" (click)="showModalDialog(product)"></p-button>
                         <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
                     </div>
                 </div>
@@ -20,3 +20,24 @@
         </div>
     </ng-template>
 </p-carousel>
+
+<p-dialog header="Comprar" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <p-toast></p-toast>
+    <form [formGroup]="artworkForm">
+        <div class="row mt-12" >
+            <div class="col-md-4">
+                <label class="required">Direccion:</label>
+                <input class="form-control" type="text" formControlName="address" maxlength="50">
+            </div>
+            <div class="col-md-4">
+                <label class="required">Metodo de pago:</label>
+                <input class="form-control" type="text" formControlName="paymentMethod" maxlength="50">
+            </div>
+        </div>
+    </form>
+        <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayModal=false" label="Cancelar" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="confirmSales()" label="Comprar" styleClass="p-button-text"></p-button>
+        </ng-template>
+</p-dialog>

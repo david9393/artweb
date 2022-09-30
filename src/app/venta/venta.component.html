@@ -1,1 +1,59 @@
 <p-tabMenu [model]="items"></p-tabMenu>
+<p-toast></p-toast>
+
+
+<body>
+    <header class="container-fluid bg-primary d-flex justify-content-center">
+        <a href="inicio.html"> <h1 class="text-light mb-3 p-4 fs-1">ArtWork</h1></a>               
+      </header>
+      
+      <form [formGroup]="artworkForm">
+        <div class="row mt-12" >
+            <div class="col-md-4">
+                <img class="img-thumbnail" src="/assets/ciervo.jpg">
+            </div>
+            <div class="col-md-6">
+                <div class="row mt-4">
+        
+                    <div class="col-md-4">
+                        <label class="required">Nombre:</label>
+                        <input class="form-control" type="text" formControlName="name" maxlength="50">
+                    </div>
+        
+                    <div class="col-md-4">
+                        <label class="required">Precio:</label>
+                        <input class="form-control" type="number"  formControlName="price">
+                    </div>
+        
+                    <div class="col-md-4">
+                        <label class="required">Photo:</label>
+                        <input type="file" class="file-upload" formControlName="photoFile" (change)="loadImage($event)">
+                    </div>
+                </div>
+        
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <label class="required">Author:</label>
+                        <input class="form-control" type="text" formControlName="author">
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label class="required">Tipo:</label>
+                        <select class="form-control" formControlName="type">
+                            <option [ngValue]="null" selected disabled hidden>Seleccione Tipo</option>
+                            <option *ngFor="let item of typesArtworks" [ngValue]="item">
+                                {{item}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 ">
+                        <button class="btn btn-info waves-effect waves-light" style="margin-left: 30%; margin-top: 12%;"
+                            (click)="OnSubmit()">Guardar</button>
+                    </div>
+                </div>
+              
+              
+            </div>
+        </div>
+       
+    </form> 
+</body>
