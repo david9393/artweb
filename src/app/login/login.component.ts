@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
-        return;
+      this.messageService.add({severity:'warn', summary: 'Warn', detail: 'verifique sus datos'});
+      return;
     }
 
     this.loading = true;
